@@ -3,7 +3,7 @@
 
 <b> About MNIST: </b><br>
 http://yann.lecun.com/exdb/mnist/ <br>
-Yann LeCun (Courant Institute, NYU), Corinna Cortes (Google Labs, New York)
+Yann LeCun (Courant Institute, NYU), Corinna Cortes (Google Labs, New York) <br>
 and Christopher J.C. Burges (Microsoft Research, Redmond)
 
 The MNIST database of handwritten digits, has a training set of 60,000 examples,
