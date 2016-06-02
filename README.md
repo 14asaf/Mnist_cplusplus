@@ -2,7 +2,7 @@
 <h1> MNIST Dataset Loader C++ </h1><br>
 
 <b> About MNIST: </b><br>
-http://yann.lecun.com/exdb/mnist/
+http://yann.lecun.com/exdb/mnist/ <br>
 Yann LeCun (Courant Institute, NYU), Corinna Cortes (Google Labs, New York)
 and Christopher J.C. Burges (Microsoft Research, Redmond)
 
