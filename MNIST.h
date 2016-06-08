@@ -47,14 +47,13 @@
 #define swap32(n) ((swap16((n&0xFFFF0000)>>16))|((swap16(n&0x0000FFFF))<<16))
 
 typedef unsigned char           byte;
-typedef std::vector<byte>       row;
-
 
 
 struct MNISTchar {
-    std::vector<row> pixelData;
-    int label;
-    MNISTchar(byte rows) : pixelData(std::vector<row>(rows)), label(0) {}
+    std::vector<double> pixelData;          // Store the 784 (28x28) pixel color values (0-255) of the digit-image
+    std::vector<double> output;             // Store the expected output (e.g: label 5 / output 0,0,0,0,0,1,0,0,0,0)
+    int label;                              // Store the handwritten digit in number form
+    MNISTchar() : pixelData(std::vector<double>()), output(std::vector<double>(10)), label(0) {}
 };
 
 
@@ -66,8 +65,11 @@ public:
     
     
     MNIST(const std::string& path)
-        :   trainingData(getMNISTdata(path + "train-images.idx3-ubyte", path + "train-labels.idx1-ubyte")),
-            testData(getMNISTdata(path + "t10k-images-idx3-ubyte", path + "t10k-labels-idx1-ubyte")) {}
+    :   trainingData(getMNISTdata(path + "train-images.idx3-ubyte", path + "train-labels.idx1-ubyte")),
+        testData(getMNISTdata(path + "t10k-images.idx3-ubyte", path + "t10k-labels.idx1-ubyte")) {
+            if(!this->trainingData.size()) { std::cout <<"ERROR: parsing training data" <<std::endl; }
+            if(!this->testData.size()) { std::cout <<"ERROR: parsing testing data" <<std::endl; }
+    }
     
     
 private:
@@ -91,14 +93,12 @@ private:
             col_count= swap32(col_count);
             // Loop throug all the items and store every pixel of every row
             for (int i = 0; i < itemCount_images; i++) {
-                MNISTchar tmpchar = MNISTchar(row_count);
-                for(int r = 0; r < row_count; r++) {
-                    for(int c = 0; c < col_count; c++) {
-                        byte pixel = 0;
-                        // read one byte (0-255 color value of the pixel)
-                        file.read((char*)&pixel, 1);
-                        tmpchar.pixelData[r].push_back(pixel);
-                    }
+                MNISTchar tmpchar = MNISTchar();
+                for(int r = 0; r < (row_count * col_count); r++) {
+                    byte pixel = 0;
+                    // read one byte (0-255 color value of the pixel)
+                    file.read((char*)&pixel, 1);
+                    tmpchar.pixelData.push_back((double)pixel / 255);
                 }
                 tmpdata.push_back(tmpchar);
             }
@@ -115,6 +115,7 @@ private:
                 // read all the labels and store them in theire MNISTchars
                 for(MNISTchar& m : tmpdata) {
                     file.read((char*)&m.label, 1);
+                    m.output[m.label] = 1.0f;
                 }
             }
         }
@@ -124,24 +125,30 @@ private:
     
     
 public:
-    // Print out some digits from the training set
-    // (startChar / endChar should be in the range of 0 - 60.000)
     void testPrintout(int startChar, int endChar) const {
         for(int i = startChar; i < endChar; i++) {
             std::cout <<"------------------------------" <<std::endl;
-            for (const row& r : trainingData[i].pixelData) {
-                for (const int& pixCol : r) {
-                    if(pixCol < 50) std::cout <<" ";
-                    else if(pixCol <120) std::cout <<"-";
-                    else if(pixCol < 200) std::cout <<"+";
-                    else if(pixCol <= 255) std::cout <<"#";
+            int count = 0;
+            for (const double& r : trainingData[i].pixelData) {
+                if(count < 27) {
+                    if(r < 0.25) std::cout <<" ";
+                    else if(r < 0.5) std::cout <<"-";
+                    else if(r < 0.75) std::cout <<"+";
+                    else if(r <= 1.0) std::cout <<"#";
+                    ++count;
+                } else {
+                    std::cout <<std::endl;
+                    count = 0;
                 }
-                std::cout <<std::endl;
             }
+            std::cout <<" Expected Output: ";
+            for(const short& x : trainingData[i].output) { std::cout <<x; }
+            std::cout <<std::endl;
             std::cout <<"\t\tThis is a: " <<trainingData[i].label  <<std::endl;
             std::cout <<"------------------------------" <<std::endl;
         }
     }
+    
     
 };
 

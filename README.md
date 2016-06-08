@@ -2,8 +2,13 @@
 <h1> MNIST Dataset Loader C++ </h1><br>
 
 <b> About MNIST: </b><br>
+<<<<<<< HEAD
 http://yann.lecun.com/exdb/mnist/
 Yann LeCun (Courant Institute, NYU), Corinna Cortes (Google Labs, New York)
+=======
+http://yann.lecun.com/exdb/mnist/ <br>
+Yann LeCun (Courant Institute, NYU), Corinna Cortes (Google Labs, New York) <br>
+>>>>>>> 33450fe19007dc22c478dbfc80e9a87a27a835e1
 and Christopher J.C. Burges (Microsoft Research, Redmond)
 
 The MNIST database of handwritten digits, has a training set of 60,000 examples,
