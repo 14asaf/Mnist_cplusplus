@@ -15,11 +15,11 @@ and pattern recognition methods on real-world data while spending minimal <br>
 efforts on preprocessing and formatting. <br>
 
 <b> About the Loader </b><br>
-This is a short C++ programm to parse the MNIST Dataset.
+This is a short C++ programm to parse the MNIST Dataset. <br>
 (which is one of the most popular datasets to train neural networks)
 
 - All four MNIST data files are needed (training images + labels / test images + labels)
 - Path to those files is passed in the constructor
-- The class has two members (trainingData & testData) that hold the 60.000 & 10.000 digits
-- The pixel data of each digit is stored in a two dimensional vector (rows / columns)
+- The class has two containers (trainingData & testData) that hold the 60.000 & 10.000 digits
+- The pixel data of each digit is stored in a vector (784 doubles, one for each pixel)
 - Printout function, to verify that the digits + labels are parsed correctly
