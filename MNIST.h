@@ -50,10 +50,10 @@ typedef unsigned char           byte;
 
 
 struct MNISTchar {
-    std::vector<double> pixelData;          // Store the 784 (28x28) pixel color values (0-255) of the digit-image
-    std::vector<double> output;             // Store the expected output (e.g: label 5 / output 0,0,0,0,0,1,0,0,0,0)
+    std::vector<float> pixelData;          // Store the 784 (28x28) pixel color values (0-255) of the digit-image
+    std::vector<float> output;             // Store the expected output (e.g: label 5 / output 0,0,0,0,0,1,0,0,0,0)
     int label;                              // Store the handwritten digit in number form
-    MNISTchar() : pixelData(std::vector<double>()), output(std::vector<double>(10)), label(0) {}
+    MNISTchar() : pixelData(std::vector<float>()), output(std::vector<float>(10)), label(0) {}
 };
 
 
@@ -98,7 +98,7 @@ private:
                     byte pixel = 0;
                     // read one byte (0-255 color value of the pixel)
                     file.read((char*)&pixel, 1);
-                    tmpchar.pixelData.push_back((double)pixel / 255);
+                    tmpchar.pixelData.push_back((float)pixel / 255);
                 }
                 tmpdata.push_back(tmpchar);
             }
@@ -129,7 +129,7 @@ public:
         for(int i = startChar; i < endChar; i++) {
             std::cout <<"------------------------------" <<std::endl;
             int count = 0;
-            for (const double& r : trainingData[i].pixelData) {
+            for (auto r : trainingData[i].pixelData) {
                 if(count < 27) {
                     if(r < 0.25) std::cout <<" ";
                     else if(r < 0.5) std::cout <<"-";
