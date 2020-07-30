@@ -65,8 +65,8 @@ public:
     
     
     MNIST(const std::string& path)
-    :   trainingData(getMNISTdata(path + "train-images.idx3-ubyte", path + "train-labels.idx1-ubyte")),
-        testData(getMNISTdata(path + "t10k-images.idx3-ubyte", path + "t10k-labels.idx1-ubyte")) {
+    :   trainingData(getMNISTdata(path + "train-images-idx3-ubyte", path + "train-labels-idx1-ubyte")),
+        testData(getMNISTdata(path + "t10k-images-idx3-ubyte", path + "t10k-labels-idx1-ubyte")) {
             if(!this->trainingData.size()) { std::cout <<"ERROR: parsing training data" <<std::endl; }
             if(!this->testData.size()) { std::cout <<"ERROR: parsing testing data" <<std::endl; }
     }
