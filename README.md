@@ -22,3 +22,4 @@ Class MNIST
 * The public std::vector "trainingData" holds the training set of 60.000 handwritten digits
 * The public std::vector "testData" holds the testing set of 10.000 handwritten digits
 * The public function "testPrintout" takes a start + end position and prints out all the trainingData digits in bewteen
+# Mnist_cplusplus
